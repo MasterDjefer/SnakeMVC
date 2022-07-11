@@ -1,7 +1,7 @@
 #include "paintersnakecontroller.h"
 
 PainterSnakeController::PainterSnakeController(std::shared_ptr<ModelSnakeBody> model, std::shared_ptr<ModelFood> food, std::shared_ptr<WidgetInfo> widgetInfo) :
-    mModel(model), mFood(food), mWidgetInfo(widgetInfo)
+    mWidgetInfo(widgetInfo), mModel(model), mFood(food)
 {
 }
 

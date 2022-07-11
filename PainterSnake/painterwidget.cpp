@@ -11,7 +11,7 @@ PainterWidget::PainterWidget(QWidget *parent) : QWidget(parent)
 
     connect(&mTimer, &QTimer::timeout, this, &PainterWidget::onTimerIntervalEnd);
 
-    mTimer.setInterval(1000);
+    mTimer.setInterval(200);
     mTimer.start();
 }
 
