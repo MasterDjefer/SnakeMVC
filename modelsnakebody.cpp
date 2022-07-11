@@ -7,22 +7,26 @@ ModelSnakeBody::ModelSnakeBody(int startHeadX, int startHeadY, std::shared_ptr<W
 
 void ModelSnakeBody::moveLeft()
 {
-    mDirection = Left;
+    if (mDirection != Right)
+        mDirection = Left;
 }
 
 void ModelSnakeBody::moveRight()
 {
-    mDirection = Right;
+    if (mDirection != Left)
+        mDirection = Right;
 }
 
 void ModelSnakeBody::moveUp()
 {
-    mDirection = Up;
+    if (mDirection != Down)
+        mDirection = Up;
 }
 
 void ModelSnakeBody::moveDown()
 {
-    mDirection = Down;
+    if (mDirection != Up)
+        mDirection = Down;
 }
 
 void ModelSnakeBody::makeMove()
