@@ -21,12 +21,14 @@ SOURCES += \
     PainterSnake/paintersnakecontroller.cpp \
     PainterSnake/painterwidget.cpp \
     main.cpp \
+    modelfood.cpp \
     modelsnakebody.cpp \
     widgetinfo.cpp
 
 HEADERS += \
     PainterSnake/paintersnakecontroller.h \
     PainterSnake/painterwidget.h \
+    modelfood.h \
     modelsnakebody.h \
     widgetinfo.h
 

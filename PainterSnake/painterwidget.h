@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "modelsnakebody.h"
+#include "modelfood.h"
 #include "paintersnakecontroller.h"
 #include "widgetinfo.h"
 
@@ -22,9 +23,13 @@ protected:
     void paintEvent(QPaintEvent *event);
     void keyPressEvent(QKeyEvent *event);
 
+private slots:
+    void onTimerIntervalEnd();
+
 private:
     std::shared_ptr<WidgetInfo> mWidgetInfo;
-    std::shared_ptr<ModelSnakeBody> mModel;
+    std::shared_ptr<ModelSnakeBody> mModelSnakeBody;
+    std::shared_ptr<ModelFood> mModelFood;
     std::unique_ptr<PainterSnakeController> mController;
     QTimer mTimer;
 };

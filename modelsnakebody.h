@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "widgetinfo.h"
+#include "modelfood.h"
 
 class ModelSnakeBody : public QObject
 {
@@ -22,7 +23,7 @@ class ModelSnakeBody : public QObject
     };
 
 public:
-    ModelSnakeBody(int startHeadX, int startHeadY, std::shared_ptr<WidgetInfo> widgetInfo);
+    ModelSnakeBody(std::shared_ptr<ModelFood> food, std::shared_ptr<WidgetInfo> widgetInfo);
     void moveLeft();
     void moveRight();
     void moveUp();
@@ -30,14 +31,17 @@ public:
     void eat();
     QList<QPoint>::const_iterator begin() const;
     QList<QPoint>::const_iterator end() const;
-
-public slots:
     void makeMove();
 
 private:
+    void checkFood();
+
+private:
     QList<QPoint> mBody;
+    QPoint mLastBody;
     Direction mDirection;
     std::shared_ptr<WidgetInfo> mWidgetInfo;
+    std::shared_ptr<ModelFood> mFood;
 };
 
 #endif // MODELSNAKEBODY_H

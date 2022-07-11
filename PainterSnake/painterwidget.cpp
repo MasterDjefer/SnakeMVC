@@ -3,14 +3,15 @@
 PainterWidget::PainterWidget(QWidget *parent) : QWidget(parent)
 {
     mWidgetInfo = std::make_shared<WidgetInfo>(20, 500, 600);
-    mModel = std::make_shared<ModelSnakeBody>(400, 100, mWidgetInfo);
-    mController = std::make_unique<PainterSnakeController>(mModel, mWidgetInfo);
+    mModelFood = std::make_unique<ModelFood>(mWidgetInfo);
+    mModelSnakeBody = std::make_shared<ModelSnakeBody>(mModelFood, mWidgetInfo);
+    mController = std::make_unique<PainterSnakeController>(mModelSnakeBody, mModelFood, mWidgetInfo);
 
     resize(mWidgetInfo->windowWidth, mWidgetInfo->windowHeight);
 
-    connect(&mTimer, &QTimer::timeout, mModel.get(), &ModelSnakeBody::makeMove);
+    connect(&mTimer, &QTimer::timeout, this, &PainterWidget::onTimerIntervalEnd);
 
-    mTimer.setInterval(500);
+    mTimer.setInterval(1000);
     mTimer.start();
 }
 
@@ -20,13 +21,16 @@ PainterWidget::~PainterWidget()
 
 void PainterWidget::paintEvent(QPaintEvent *event)
 {
+    (void)event;
+
     QPainter painter(this);
-    painter.setBrush(Qt::red);
     painter.setPen(Qt::black);
 
-    mController->draw(painter);
+    painter.setBrush(Qt::red);
+    mController->drawSnake(painter);
 
-    this->update();
+    painter.setBrush(Qt::green);
+    mController->drawFood(painter);
 }
 
 void PainterWidget::keyPressEvent(QKeyEvent *event)
@@ -34,20 +38,27 @@ void PainterWidget::keyPressEvent(QKeyEvent *event)
     switch (event->key())
     {
     case Qt::Key_Space:
-        mModel->eat();
+        mModelSnakeBody->eat();
         break;
     case Qt::Key_Up:
-        mModel->moveUp();
+        mModelSnakeBody->moveUp();
         break;
     case Qt::Key_Down:
-        mModel->moveDown();
+        mModelSnakeBody->moveDown();
         break;
     case Qt::Key_Left:
-        mModel->moveLeft();
+        mModelSnakeBody->moveLeft();
         break;
     case Qt::Key_Right:
-        mModel->moveRight();
+        mModelSnakeBody->moveRight();
         break;
     }
+}
+
+void PainterWidget::onTimerIntervalEnd()
+{
+    mModelSnakeBody->makeMove();
+
+    update();
 }
 
